@@ -43,87 +43,49 @@
 </head>
 
 <body>
+    
     <main>
         <div class="col">
+            <div class="nav">
+                <span class="nav-item" >
+                    <a class="button" @click="appendx">
+                        <span>0x00</span>
+                    </a>
+                    <a class="button" @click="removex">
+                        <span>00</span>
+                    </a>
+                    <a class="button" @click="removespace">
+                        <span>0000</span>
+                    </a>                    
+                    <a class="button" @click="addspace">
+                        <span>00 00</span>
+                    </a>
+                    <a class="button" @click="csv">
+                        <span>00,00</span>
+                    </a>
+                    <!--                
+                    <a class="button" >
+                        <span>0000</span>
+                    </a>                    
+                    <a class="button" >
+                        <span>Column:8</span>
+                    </a>
+                    <a class="button" >
+                        <span>Column:16</span>
+                    </a>
+                    <a class="button" >
+                        <span>No Column</span>
+                    </a>
+                    -->
+                </span>
+            </div>
             <textarea v-model="scratchpad"></textarea>
             <textarea v-model="cleaned"></textarea>
         </div>
         <textarea v-model="output"></textarea>
     </main>
 
-    <script>
-    const Buffer = window.buffer.Buffer
-
-    new Vue({
-        el: "main",
-        data: {
-            scratchpad: "00 ff 11 22 33 44",
-            input: ""
-        },
-        computed: {
-            cleaned: function () {
-                return this.input
-                    .replace(/0x/g, "")
-                    .replace(/ /g, "")
-                    .replace(/\n/g, "")
-            },
-
-            buffer: function () {
-                try {
-                    if (this.cleaned.match(/[0-f]+/)) {
-                        return new Buffer(this.cleaned, "hex")
-                    }
-                } catch (e) {
-                    return null
-                }
-                return null
-            },
-
-            output: function () {
-                const toHex = parseInt(this.input.replace(/ /g, ""), 10)
-                try {
-                    let toNumber = undefined
-                    if (this.buffer) {
-                        toNumber = {
-                                UInt8: this.buffer.readUInt8(0),
-                                UInt16LE: this.buffer.length > 1 ? this.buffer.readUInt16LE(0) : undefined,
-                                UInt16BE: this.buffer.length > 1 ? this.buffer.readUInt16BE(0) : undefined,
-                                UInt32LE: this.buffer.length > 3 ? this.buffer.readUInt32LE(0) : undefined,
-                                UInt32BE: this.buffer.length > 3 ? this.buffer.readUInt32BE(0) : undefined,
-                                Int8: this.buffer.readInt8(0),
-                                Int16LE: this.buffer.length > 1 ? this.buffer.readInt16LE(0) : undefined,
-                                Int16BE: this.buffer.length > 1 ? this.buffer.readInt16BE(0) : undefined,
-                                Int32LE: this.buffer.length > 3 ? this.buffer.readInt32LE(0) : undefined,
-                                Int32BE: this.buffer.length > 3 ? this.buffer.readInt32BE(0) : undefined,
-                            }
-                    }
-                    const output =
-                        {
-                            toNumber: toNumber,
-                            toHex: toHex ? toHex.toString(16) : undefined
-                        }
-                    return output
-                } catch (e) {
-                    return "xox"
-                }
-                return "-_-"
-            }
-        },
-        mounted: function () {
-            console.log("ready");
-            setInterval(() => {
-                const selection = window.getSelection().toString()
-                console.log("set: " + selection)
-                if (selection === "") {
-                    this.input = this.scratchpad
-                } else {
-                    this.input = selection
-                }
-            }, 1000)
-
-        }
-    })
-</script>
+    <script src="index.js"></script>
 </body>
 
 </html>
