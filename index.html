@@ -46,7 +46,7 @@
     <main>
         <div class="col">
             <textarea v-model="scratchpad"></textarea>
-            <textarea v-model="input"></textarea>
+            <textarea v-model="cleaned"></textarea>
         </div>
         <textarea v-model="output"></textarea>
     </main>
@@ -65,8 +65,8 @@
                 return this.input
                     .replace(/0x/g, "")
                     .replace(/ /g, "")
+                    .replace(/\n/g, "")
             },
-
 
             buffer: function () {
                 try {
