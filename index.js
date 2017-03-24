@@ -67,7 +67,7 @@ new Vue({
                         toNumber: toNumber,
                         toHex: toHex ? toHex.toString(16) : undefined
                     }
-                return output
+                return JSON.stringify(output, null, 2)
             } catch (e) {
                 return "xox"
             }
